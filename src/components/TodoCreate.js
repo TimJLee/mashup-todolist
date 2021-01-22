@@ -42,7 +42,7 @@ const CircleButton = styled.button`
       &:active {
         background: #fa5252;
       }
-      transform: translate(-50%, 50%) rotate(45deg);
+      transform: translate(-50%, 50%) rotate(45deg); // 추가 버튼을 클릭했을 시에 translate 를 통해 추가 버튼으로 모양이 변경되는 코드. 
     `}
 `;
 
@@ -76,8 +76,8 @@ const Input = styled.input`
 `;
 
 function TodoCreate() {
-  const [open, setOpen] = useState(false);
-
+  const [open, setOpen] = useState(false); // useState(false 또는 0 또는 '' 는 state의 자료형 지정 하는 것이다.)
+                                           // 각각 boolean, number, string. 아마 상태의 디폴트 값은 각각 거짓 일 듯 하다. 
   const onToggle = () => setOpen(!open);
 
   return (
@@ -85,11 +85,13 @@ function TodoCreate() {
       {open && (
         <InsertFormPositioner>
           <InsertForm>
-            <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
+            <Input autoFocdus placeholder="할 일을 입력 후, Enter 를 누르세요" />
           </InsertForm>
         </InsertFormPositioner>
       )}
-      <CircleButton onClick={onToggle} open={open}>
+      <CircleButton onClick={onToggle} open={open}> {/* create circle button 을 클릭하면, toggle 메소드가 발동되면서 onToggle 함수 작동.
+      그리고 해당 함수에서는 open 상태 값을 가지고 식별자로 활용하여, 만약 open 값이 참이라면 버튼의 모양을 transition 을 통해서 플러스 버튼으로 변경.
+      이때, setOpen parameter 를 보면, 불린 값이 반대로 변하는 것을 확인 할 수 있다.  */}
         <MdAdd />
       </CircleButton>
     </>
