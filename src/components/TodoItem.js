@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md'; // 꽤 괜찮은 디자인 버튼임
+import { useTodoDispatch } from '../TodoContext';
 
 const Remove = styled.div`
   display: flex;
@@ -58,15 +59,20 @@ const Text = styled.div`
 `;
 
 function TodoItem({ id, done, text }) {
+  const dispatch = useTodoDispatch();
+  const onToggle = () => dispatch({ type: 'TOGGLE', id });
+  const onRemove = () => dispatch({ type: 'REMOVE', id });
   return (
     <TodoItemBlock>
-      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle> {/* && - 전자 값이 참이면 후자를 출력하고, 전자가 거짓이면 전자 값 출력 */}
+      <CheckCircle done={done} onClick={onToggle}>
+          {done && <MdDone />}
+      </CheckCircle> {/* && - 전자 값이 참이면 후자를 출력하고, 전자가 거짓이면 전자 값 출력 */}
       <Text done={done}>{text}</Text> {/* Text 컴포넌트에, 매개변수로 받은 done 값을 넘겨주는 방식이다. 이 값을 가지고 상태값에 따라 스타일이 변경됨. */}
-      <Remove>
+      <Remove onClick={onRemove}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
   );
 }
 
-export default TodoItem;
+export default React.memo(TodoItem);
